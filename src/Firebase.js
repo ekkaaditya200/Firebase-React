@@ -12,7 +12,8 @@ const firebaseConfig = {
   storageBucket: "fir-react-e47cd.appspot.com",
   messagingSenderId: "76121599088",
   appId: "1:76121599088:web:c54b3ce63fefcf5b0cd8b5",
-  measurementId: "G-DH088NWK8F"
+  measurementId: "G-DH088NWK8F",
+  databaseURL:"https://fir-react-e47cd-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase
