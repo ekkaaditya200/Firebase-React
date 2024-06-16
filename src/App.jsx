@@ -1,8 +1,24 @@
-import AddData from './Components/RealtimeDatabase/AddData'
+import AddStudent from './Components/AddStudent';
+import Dashboard from './Components/Dashboard';
+import StudentList from './Components/StudentList';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import UpdateStudent from './Components/UpdateStudent';
+const myRouter = createBrowserRouter([
+  {
+    path: '', Component: Dashboard, children: [
+      { path: '', Component: StudentList },
+      { path: 'addStudent', Component: AddStudent },
+      { path: 'studentList', Component: StudentList },
+      { path: 'updateStudent', Component: UpdateStudent },
+    ]
+  }
+])
 export default function App() {
   return (
-    <h1 className="w-screen h-screen bg-red-200">
-      <AddData></AddData>
-    </h1>
+    <>
+      <RouterProvider router={myRouter}>
+
+      </RouterProvider>
+    </>
   )
 }
