@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getDatabase, onValue, ref, remove } from 'firebase/database'
+import { getStorage, ref as storageRef, deleteObject } from "firebase/storage";
 import { app } from '../Firebase'
 import { useNavigate } from "react-router-dom";
 const StudentList = () => {
@@ -14,11 +15,17 @@ const StudentList = () => {
     })
   }
   const deleteStudent = (key) => {
+    const storage = getStorage(app);
     const db = getDatabase(app);
     const studentRef = ref(db, 'student/' + key);
-    remove(studentRef);
+    const myRef = storageRef(storage,'images/' + key)
+    deleteObject(myRef).then(() => {
+      
+      remove(studentRef)
+      alert("Student Removed Successfully !")
+    }
+    ).catch(error => console.log(error))
   }
-  // console.log(list);
   useEffect(() => {
     getStudentList();
   }, [])
@@ -34,8 +41,16 @@ const StudentList = () => {
                   <p>{val.rollno}</p>
                   <p>{val.name}</p>
                   <p>{val.phone}</p>
+                  {
+                    val.imageUrl &&
+                    // <img className="w-24 h-24" src={val.imageUrl}/>
+                    <a href={val.imageUrl} target="_blank"
+                      rel="noreferrer">
+                      Open PDF
+                    </a>
+                  }
                   <button onClick={() => deleteStudent(key)}>Delete</button>
-                  <button onClick={() => navigate('/updateStudent',{state:[key, val]})}>Update</button>
+                  <button onClick={() => navigate('/updateStudent', { state: [key, val] })}>Update</button>
                 </div>
               })}
             </div>
